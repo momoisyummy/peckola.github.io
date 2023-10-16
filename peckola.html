@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pecola's Perspective Game</title>
+    <style>
+        /* Add your CSS styles here for formatting */
+    </style>
+</head>
+<body>
+    <h1>Pecola's Perspective: A Mindset Alignment Game</h1>
+    <form id="quiz-form">
+        <!-- Question 1 -->
+        <p><b>1. How do you feel about your own appearance?</b></p>
+        <label><input type="radio" name="q1" value="1"> I'm confident and comfortable with my appearance.</label><br>
+        <label><input type="radio" name="q1" value="2"> I have some insecurities but try to embrace who I am.</label><br>
+        <label><input type="radio" name="q1" value="3"> I often feel inadequate because I don't match society's beauty standards.</label><br>
+
+        <p><b>2. How do you respond when someone criticizes your looks?</b></p>
+        <label><input type="radio" name="q2" value="1"> I stand up for myself and my self-worth.</label><br>
+        <label><input type="radio" name="q2" value="2"> I try to let it roll off my back, but it can hurt. </label><br>
+        <label><input type="radio" name="q2" value="3"> I let it curve over me and I am deeply affected by it. I feel my self worth lacking.</label><br>
+
+        <p><b>3. What is your view on societal beauty standards?</b></p>
+        <label><input type="radio" name="q3" value="1"> I think they're unrealistic and damaging.</label><br>
+        <label><input type="radio" name="q3" value="2"> I try not to let them define me but sometimes I check if I meet societal beauty standard category. </label><br>
+        <label><input type="radio" name="q3" value="3"> I often try to meet these standards.</label><br>
+
+        <p><b>4. How important is it for you to be "liked" or accepted by others?</b></p>
+        <label><input type="radio" name="q4" value="1"> I value my own opinion most.</label><br>
+        <label><input type="radio" name="q4" value="2"> It matters to some extent, but I prioritize self-acceptance. </label><br>
+        <label><input type="radio" name="q4" value="3"> I often seek validation from others.</label><br>
+
+        <p><b>5. Would you prefer to be more western looking or african looking?</b></p>
+        <label><input type="radio" name="q5" value="1"> I do not care, how I look. I like the black african heritage and would love to learn more about it.</label><br>
+        <label><input type="radio" name="q5" value="2"> I appreciate the way human being are. Different color, different culture. But I might lean a bit towards western looks.</label><br>
+        <label><input type="radio" name="q5" value="3"> I want to explore how it feels like to be a white even though I might not be strongly skewed towards one option. </label><br>
+
+        <p><b>6. Do you feel like people are judging you based on how you look?</b></p>
+        <label><input type="radio" name="q6" value="1"> Not at all. I do not care. </label><br>
+        <label><input type="radio" name="q6" value="2"> Sometimes!</label><br>
+        <label><input type="radio" name="q6" value="3"> Yes, I feel people are talking about me all the time.</label><br>
+
+        <p><b>7. How do you react to media portrayals of beauty that don't align with your appearance?</b></p>
+        <label><input type="radio" name="q8" value="1"> I recognize that media often perpetuates unrealistic standards. </label><br>
+        <label><input type="radio" name="q8" value="2"> I try to maintain a balanced perspective but can feel affected at times.</label><br>
+        <label><input type="radio" name="q8" value="3"> I feel pressure to conform to these portrayals and may become dissatisfied with my appearance.</label><br>
+
+        <p><b>8. SHS Theatre company is recruiting you for one of the role in their upcoming "The Bluest Eye" show. Which character would you pick?</b></p>
+        <label><input type="radio" name="q7" value="1"> Peckola </label><br>
+        <label><input type="radio" name="q7" value="2"> China </label><br>
+        <label><input type="radio" name="q7" value="3"> Maureen </label><br>
+
+        
+        <button type="submit">Submit</button>
+    </form>
+
+    <div id="result">
+        <!-- The alignment percentage and narrative feedback will be displayed here -->
+    </div>
+
+    <script>
+        const quizForm = document.getElementById("quiz-form");
+        const resultDiv = document.getElementById("result");
+    
+        quizForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+    
+            // Define an object to map the question number to its weight
+            const questionWeights = {
+                q1: 1,
+                q2: 1,
+                q3: 1,
+                q4: 1,
+                q5: 1,
+                q6: 1,
+                q7: 1,
+                q8: 1,
+            };
+    
+            // Calculate the alignment percentage based on selected answers
+            const selectedAnswers = Array.from(quizForm.elements)
+                .filter((element) => element.type === "radio" && element.checked);
+    
+            const totalScore = selectedAnswers.reduce((acc, element) => {
+                const questionName = element.name;
+                const answerValue = parseInt(element.value);
+                const weight = questionWeights[questionName];
+                return acc + (answerValue * weight);
+            }, 0);
+    
+            const maxPossibleScore = Object.values(questionWeights).reduce((acc, weight) => acc + weight, 0);
+    
+            const alignmentPercentage = ((totalScore / (maxPossibleScore * 3)) * 100).toFixed(2);
+    
+            // Provide narrative feedback based on alignmentPercentage
+            let feedback = "";
+            if (alignmentPercentage <= 35) {
+                feedback = "Your mindset differs significantly from Pecola's experiences and perspectives.";
+            } else if (alignmentPercentage <= 70) {
+                feedback = "Your mindset partially aligns with Pecola's experiences and perspectives.";
+            } else {
+                feedback = "Your mindset closely aligns with Pecola's experiences and perspectives.";
+            }
+    
+            // Display the alignment percentage and feedback
+            resultDiv.innerHTML = `<p>Alignment Percentage: ${alignmentPercentage}%</p><p>${feedback}</p>`;
+        });
+    </script>
+    
+</body>
+</html>
+
+
+
+
